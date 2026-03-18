@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/icon.png" />
+        <link rel="icon" href="/icon2.png" />
       </head>
       <body
         className={`${montserrat.className} antialiased bg-black`}
