@@ -72,7 +72,7 @@ const Header = () => {
         <a
           key={item.id}
           href={`#${item.id}`}
-          className={`text-lg lg:text-2xl font-bold mb-4 transition-colors duration-300 w-full text-center
+          className={`text-lg lg:text-xl font-bold mb-4 transition-colors duration-300 w-full text-center
             ${
               activeSection === item.id
                 ? "text-primary"
