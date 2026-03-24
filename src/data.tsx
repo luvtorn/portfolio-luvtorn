@@ -1,6 +1,15 @@
 import { FaGitAlt, FaReact } from "react-icons/fa";
 import { SiNextdotjs, SiTypescript } from "react-icons/si";
 
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  tech: string[];
+  github?: string;
+  demo?: string;
+};
+
 export const experiences = [
   {
     company: "Forte Group",
@@ -25,5 +34,33 @@ export const experiences = [
       "Worked with REST APIs and GitLab repositories",
       "Collaborated with the development team using Jira",
     ],
+  },
+] as const;
+
+export const projects: Project[] = [
+  {
+    title: "Games Collection",
+    description:
+      "A collection of mini-games like Wordle, Hangman, Battleship built with React.",
+    image: "/projects/games.png",
+    tech: ["React", "MobX", "Tailwind"],
+    github: "https://github.com/luvtorn",
+    demo: "https://luvtorn.github.io/games-collection",
+  },
+  {
+    title: "Bookstore",
+    description: "Online bookstore with cart, filters and product management.",
+    image: "/projects/bookstore.png",
+    tech: ["Next.js", "TypeScript", "API"],
+    github: "https://github.com/luvtorn",
+  },
+  {
+    title: "Portfolio",
+    description:
+      "A portfolio website showcasing React, Next.js, and creative web projects.",
+    image: "/projects/portfolio.png",
+    tech: ["Next.js", "Framer Motion", "Tailwind"],
+    demo: "https://portfolio-luvtorn.vercel.app/",
+    github: "https://github.com/luvtorn/portfolio-luvtorn",
   },
 ] as const;

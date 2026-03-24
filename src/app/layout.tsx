@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {  Space_Grotesk, Montserrat, BioRhyme } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 export const dynamic = "force-dynamic"; 
 import SmoothScroll from "./components/addons/SmoothScroll";

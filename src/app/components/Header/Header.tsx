@@ -1,27 +1,44 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
+enum device {
+  mobile = "mobile",
+  tablet = "tablet",
+  desktop = "desktop",
+}
 
 const Header = () => {
   const items = [
     { label: "About me", id: "about" },
+    { label: "Projects", id: "projects" },
     { label: "Experience", id: "experience" },
     { label: "Contact", id: "contact" },
   ];
 
   const [visible, setVisible] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [isMobile, setIsMobile] = useState(false);
+  const [whichDevice, setWhichDevice] = useState<device>(device.desktop);
 
   const mobileClassName =
-    "flex flex-row items-center fixed left-1/2 -translate-x-1/2 gap-3 text-sm bg-black/90 p-5 rounded-full z-30 w-full";
+    "flex flex-row items-center justify-center fixed left-1/2 -translate-x-1/2 gap-3 text-sm bg-black/90 p-3 pt-5 rounded-b-2xl z-30 w-full";
+
+  const tabletClassName =
+    "flex flex-row items-center fixed left-1/2 -translate-x-1/2 gap-3 text-sm bg-black/90 p-3 rounded-b-2xl z-30 w-full";
+
   const desktopClassName =
-    "[writing-mode:vertical-rl] flex fixed right-15 top-1/2 -translate-y-1/2 gap-5";
+    "[writing-mode:vertical-rl] flex fixed right-10 items-center top-1/2 -translate-y-1/2 gap-5 z-30";
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth < 768) {
+        setWhichDevice(device.mobile);
+      } else if (window.innerWidth < 1024) {
+        setWhichDevice(device.tablet);
+      } else {
+        setWhichDevice(device.desktop);
+      }
     };
 
     handleResize();
@@ -31,7 +48,7 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    const threshold = window.innerWidth < 768 ? 900 : 200;
+    const threshold = window.innerWidth < 768 ? 900 : 250;
     const handleScroll = () => {
       setVisible(window.scrollY > threshold);
     };
@@ -63,7 +80,13 @@ const Header = () => {
 
   return (
     <motion.header
-      className={isMobile ? mobileClassName : desktopClassName}
+      className={
+        whichDevice === device.mobile
+          ? mobileClassName
+          : whichDevice === device.tablet
+            ? tabletClassName
+            : desktopClassName
+      }
       initial={{ opacity: 0, x: 100 }}
       animate={visible ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.8 }}

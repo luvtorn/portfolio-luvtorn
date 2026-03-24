@@ -47,7 +47,7 @@ const ContactForm = () => {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6, type: keyframes}}
       id="contact"
-      className="max-w-2xl mx-auto p-5 md:p-16 bg-gradient-to-br from-gray-900 to-black/90 rounded-3xl shadow-2xl flex flex-col gap-3"
+      className="max-w-2xl mx-auto p-16 md:p-16 bg-linear-to-br from-gray-900 to-black/90 rounded-3xl shadow-2xl flex flex-col gap-3"
     >
       <h2 className="text-4xl font-bold text-white text-center mb-2">
         Contact Me
