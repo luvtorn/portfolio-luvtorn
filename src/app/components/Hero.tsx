@@ -36,7 +36,12 @@ const Hero = () => {
           </p>
 
           <div className="flex items-center gap-4 mt-4">
-            <Button className="hover:px-6.5">View Projects</Button>
+            <a
+              href="#projects"
+              className="px-5 py-2 rounded-lg transition-all border border-secondary bg-primary text-black hover:bg-[#ddbd1d] hover:px-6"
+            >
+              View Projects
+            </a>
             <a
               href="#contact"
               className="px-5 py-2 rounded-lg transition-all border border-secondary text-white hover:bg-secondary hover:text-white hover:px-6"

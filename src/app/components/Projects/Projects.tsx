@@ -11,7 +11,15 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const Projects = () => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState("");
+
+  const handleActive = (title: string) => {
+    if (active === title) {
+      setActive("");
+    } else {
+      setActive(title);
+    }
+  };
 
   return (
     <section id="projects" className=" bg-black text-white py-20 px-6">
@@ -36,9 +44,7 @@ const Projects = () => {
             <SwiperSlide key={index}>
               <motion.div
                 whileHover={{ scale: 1.03 }}
-                onMouseEnter={() => setActive(true)}
-                onMouseLeave={() => setActive(false)}
-                onClick={() => setActive((prev) => !prev)}
+                onClick={() => handleActive(project.title)}
                 className="relative rounded-2xl overflow-hidden bg-gray-900 shadow-lg cursor-pointer aspect-video"
               >
                 {/* Картинка */}
@@ -50,7 +56,9 @@ const Projects = () => {
 
                 {/* Overlay */}
                 <motion.div
-                  animate={{ opacity: active ? 1 : 0 }}
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  animate={active === project.title ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   className="absolute inset-0 bg-black/80 flex flex-col justify-between p-10 rounded-2xl"
                 >
