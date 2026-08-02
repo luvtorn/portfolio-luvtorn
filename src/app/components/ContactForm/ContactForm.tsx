@@ -1,119 +1,148 @@
 "use client";
 
-import React, { useState } from "react";
-import { keyframes, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { FaArrowRight } from "react-icons/fa";
 
-const ContactForm = () => {
+type Status = "idle" | "sending" | "success" | "error";
+
+export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
-  const [status, setStatus] = useState<
-    "idle" | "sending" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<Status>("idle");
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (status === "sending") return;
     setStatus("sending");
 
     try {
-      const res = await fetch("https://formspree.io/f/mzdjyykk", {
+      const response = await fetch("https://formspree.io/f/mzdjyykk", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
-      if (res.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
-      }
+      if (!response.ok) throw new Error("Form submission failed");
+      setFormData({ name: "", email: "", message: "" });
+      setStatus("success");
     } catch {
       setStatus("error");
     }
   };
 
+  const updateField = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
+    if (status !== "idle" && status !== "sending") setStatus("idle");
+  };
+
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.6, type: keyframes}}
-      id="contact"
-      className="max-w-2xl mx-auto p-16 md:p-16 bg-linear-to-br from-gray-900 to-black/90 rounded-3xl shadow-2xl flex flex-col gap-3"
-    >
-      <h2 className="text-4xl font-bold text-white text-center mb-2">
-        Contact Me
-      </h2>
-      <p className="text-gray-400 text-center mb-2">
-        Have a project in mind? Drop me a message and let's talk!
-      </p>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-gray-800/80 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-gray-800/80 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all"
-          required
-        />
-        <textarea
-          name="message"
-          placeholder="Your Message"
-          value={formData.message}
-          onChange={handleChange}
-          className="p-4 rounded-xl bg-gray-800/80 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all resize-none h-36"
-          required
-        />
-
-        <motion.button
-          type="submit"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold py-4 rounded-2xl shadow-lg hover:from-yellow-300 hover:to-yellow-500 transition-colors"
+    <section id="contact" className="section-shell">
+      <div className="container-shell">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(255,218,39,0.1),transparent_35%),#0d0d0d] p-6 sm:p-10 lg:p-14"
         >
-          {status === "sending" ? "Sending..." : "Send Message"}
-        </motion.button>
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+            <div>
+              <p className="eyebrow">Let&apos;s work together</p>
+              <h2 className="section-title">Have a project or opportunity in mind?</h2>
+              <p className="section-copy mt-5">
+                I&apos;m open to frontend roles, internships, and thoughtful
+                collaborations. Send a message and I&apos;ll get back to you.
+              </p>
+              <a
+                href="mailto:kolyangermanenko@gmail.com"
+                className="focus-ring mt-7 inline-block text-sm font-semibold text-primary underline decoration-primary/30 underline-offset-8"
+              >
+                kolyangermanenko@gmail.com
+              </a>
+            </div>
 
-        {status === "success" && (
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-green-400 text-center font-medium"
-          >
-            Message sent successfully!
-          </motion.p>
-        )}
-        {status === "error" && (
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-red-400 text-center font-medium"
-          >
-            Something went wrong. Try again.
-          </motion.p>
-        )}
-      </form>
-    </motion.section>
+            <form onSubmit={handleSubmit} className="grid gap-5">
+              <div>
+                <label htmlFor="contact-name" className="mb-2 block text-sm font-semibold text-gray-300">
+                  Name
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  value={formData.name}
+                  onChange={updateField}
+                  autoComplete="name"
+                  required
+                  placeholder="Your name"
+                  className="focus-ring w-full rounded-xl border border-white/10 bg-black/50 px-4 py-3.5 text-white placeholder:text-gray-600 focus:border-primary"
+                />
+              </div>
+              <div>
+                <label htmlFor="contact-email" className="mb-2 block text-sm font-semibold text-gray-300">
+                  Email
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={updateField}
+                  autoComplete="email"
+                  required
+                  placeholder="you@example.com"
+                  className="focus-ring w-full rounded-xl border border-white/10 bg-black/50 px-4 py-3.5 text-white placeholder:text-gray-600 focus:border-primary"
+                />
+              </div>
+              <div>
+                <label htmlFor="contact-message" className="mb-2 block text-sm font-semibold text-gray-300">
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  value={formData.message}
+                  onChange={updateField}
+                  required
+                  minLength={10}
+                  placeholder="Tell me a little about your project or role…"
+                  className="focus-ring min-h-36 w-full resize-y rounded-xl border border-white/10 bg-black/50 px-4 py-3.5 text-white placeholder:text-gray-600 focus:border-primary"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="focus-ring inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 font-bold text-black transition hover:bg-yellow-300 disabled:cursor-wait disabled:opacity-60"
+              >
+                {status === "sending" ? "Sending…" : "Send message"}
+                {status !== "sending" && <FaArrowRight size={13} />}
+              </button>
+              <div aria-live="polite" className="min-h-6 text-center text-sm">
+                {status === "success" && (
+                  <p className="text-emerald-400">
+                    Thanks—your message was sent successfully.
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="text-red-400">
+                    The message could not be sent. Please try again or email me directly.
+                  </p>
+                )}
+              </div>
+            </form>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
-};
-
-export default ContactForm;
+}

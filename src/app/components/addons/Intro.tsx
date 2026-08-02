@@ -1,40 +1,47 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
 
-const Intro = ({ onFinish }: { onFinish: () => void }) => {
-  const slides = ["Mikołaj Germanenka", "Frontend Developer"];
-  const [current, setCurrent] = useState(0);
-
+export default function Intro({ onFinish }: { onFinish: () => void }) {
   useEffect(() => {
-    if (current < slides.length) {
-      const timer = setTimeout(() => setCurrent((prev) => prev + 1), 2100);
-      return () => clearTimeout(timer);
-    } else {
-      const finishTimer = setTimeout(() => onFinish(), 600);
-      return () => clearTimeout(finishTimer);
-    }
-  }, [current, onFinish]);
+    const timer = window.setTimeout(onFinish, 1500);
+    return () => window.clearTimeout(timer);
+  }, [onFinish]);
 
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50 overflow-hidden">
-      <AnimatePresence mode="wait">
-        {current < slides.length && (
-          <motion.h1
-            key={current}
-            initial={{ opacity: 0, y: 50, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -50, scale: 0.8 }}
-            transition={{ duration: 0.7 }}
-            className="text-white text-3xl md:text-6xl font-bold tracking-wide select-none"
-          >
-            {slides[current]}
-          </motion.h1>
-        )}
-      </AnimatePresence>
-    </div>
+    <motion.div
+      role="dialog"
+      aria-label="Portfolio introduction"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black"
+    >
+      <div className="text-center">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="eyebrow"
+        >
+          Frontend developer
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.12, duration: 0.45 }}
+          className="mt-3 text-4xl font-bold tracking-[-0.05em] text-white sm:text-6xl"
+        >
+          Mikołaj Germanenka<span className="text-primary">.</span>
+        </motion.h1>
+      </div>
+      <button
+        type="button"
+        onClick={onFinish}
+        className="focus-ring absolute right-5 bottom-5 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-gray-300 transition hover:border-primary hover:text-primary"
+      >
+        Skip
+      </button>
+    </motion.div>
   );
-};
-
-export default Intro;
+}

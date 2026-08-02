@@ -1,58 +1,83 @@
-import Image from "next/image";
-import IcosahedronScene from "./UI/IcosahedronScene";
-import Button from "./UI/button";
-import { FaReact } from "react-icons/fa";
-import Logos from "./addons/Logos";
+"use client";
+
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { FaArrowRight, FaDownload } from "react-icons/fa";
 
-const Hero = () => {
+export default function Hero() {
   return (
-    <motion.section
-      className="flex items-center justify-center max-h-11/12 py-12 px-10 lg:mt-20 z-10"
-      initial={{ opacity: 0, y: 0 }}
-      animate={{ opacity: 1, y: 50 }}
-      transition={{ duration: 2 }}
+    <section
       id="home"
+      className="container-shell section-shell flex min-h-[min(54rem,100svh)] items-center pt-30"
     >
-      <div className="flex flex-col sm:flex-row gap-12 items-center z-10">
-        <Image
-          src="/image.png"
-          width={300}
-          height={300}
-          alt="Me"
-          priority
-          className="border border-primary rounded-xl shadow-xl w-[300px] h-[400px]"
-        />
-
-        <div>
-          <h1 className="text-4xl bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Hello, I&apos;m Mikolaj
+      <div className="relative z-10 grid w-full items-center gap-12 md:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55 }}
+        >
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-gray-300">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+            Open to frontend opportunities
+          </div>
+          <p className="eyebrow">Frontend developer · Poznań, Poland</p>
+          <h1 className="mt-4 max-w-4xl text-[clamp(3rem,9vw,6.7rem)] leading-[0.92] font-bold tracking-[-0.065em] text-white">
+            Thoughtful interfaces,
+            <span className="block text-primary">built to perform.</span>
           </h1>
-          <h2 className="text-gray-400">Frontend Developer</h2>
-
-          <p className="text-gray-500 max-w-sm mt-2">
-            I create fast, modern and responsive web interfaces using React,
-            Next.js and modern frontend technologies.
+          <p className="mt-7 max-w-2xl text-base leading-7 text-gray-400 sm:text-lg">
+            I&apos;m Mikołaj, a frontend developer with commercial internship
+            experience building responsive React, Next.js, and TypeScript
+            applications—from internal dashboards to secure full-stack products.
           </p>
-
-          <div className="flex items-center gap-4 mt-4">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
               href="#projects"
-              className="px-5 py-2 rounded-lg transition-all border border-secondary bg-primary text-black hover:bg-[#ddbd1d] hover:px-6"
+              className="focus-ring inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 font-bold text-black transition hover:bg-yellow-300"
             >
-              View Projects
+              View projects <FaArrowRight size={13} />
+            </a>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3.5 font-bold text-white transition hover:border-primary hover:text-primary"
+            >
+              <FaDownload size={13} /> Download résumé
             </a>
             <a
               href="#contact"
-              className="px-5 py-2 rounded-lg transition-all border border-secondary text-white hover:bg-secondary hover:text-white hover:px-6"
+              className="focus-ring inline-flex items-center justify-center rounded-full px-6 py-3.5 font-bold text-gray-300 transition hover:text-white"
             >
               Contact me
             </a>
           </div>
-        </div>
-      </div>
-    </motion.section>
-  );
-};
+        </motion.div>
 
-export default Hero;
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1, duration: 0.55 }}
+          className="relative mx-auto w-full max-w-sm md:max-w-md"
+        >
+          <div className="absolute -inset-5 rounded-[2rem] bg-primary/10 blur-2xl" />
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/5 p-2">
+            <Image
+              src="/image.webp"
+              width={900}
+              height={1100}
+              alt="Portrait of Mikołaj Germanenka"
+              priority
+              sizes="(max-width: 767px) 85vw, (max-width: 1023px) 40vw, 420px"
+              className="aspect-[4/5] w-full rounded-[1.55rem] object-cover object-top"
+            />
+          </div>
+          <div className="absolute -bottom-5 -left-3 rounded-2xl border border-white/10 bg-[#121212]/95 px-4 py-3 shadow-2xl backdrop-blur">
+            <p className="text-xs text-gray-400">Experience</p>
+            <p className="mt-1 font-bold text-white">2 frontend internships</p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

@@ -1,112 +1,128 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-enum device {
-  mobile = "mobile",
-  tablet = "tablet",
-  desktop = "desktop",
-}
+const items = [
+  { label: "About", id: "about" },
+  { label: "Projects", id: "projects" },
+  { label: "Experience", id: "experience" },
+  { label: "Contact", id: "contact" },
+];
 
-const Header = () => {
-  const items = [
-    { label: "About me", id: "about" },
-    { label: "Projects", id: "projects" },
-    { label: "Experience", id: "experience" },
-    { label: "Contact", id: "contact" },
-  ];
-
-  const [visible, setVisible] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const [whichDevice, setWhichDevice] = useState<device>(device.desktop);
-
-  const mobileClassName =
-    "flex flex-row items-center justify-center fixed left-1/2 -translate-x-1/2 gap-3 text-sm bg-black/90 p-3 pt-5 rounded-b-2xl z-30 w-full";
-
-  const tabletClassName =
-    "flex flex-row items-center fixed left-1/2 -translate-x-1/2 gap-3 text-sm bg-black/90 p-3 rounded-b-2xl z-30 w-full";
-
-  const desktopClassName =
-    "[writing-mode:vertical-rl] flex fixed right-10 items-center top-1/2 -translate-y-1/2 gap-5 z-30";
+export default function Header() {
+  const [activeSection, setActiveSection] = useState("home");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setWhichDevice(device.mobile);
-      } else if (window.innerWidth < 1024) {
-        setWhichDevice(device.tablet);
-      } else {
-        setWhichDevice(device.desktop);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    const threshold = window.innerWidth < 768 ? 900 : 250;
-    const handleScroll = () => {
-      setVisible(window.scrollY > threshold);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const sections = document.querySelectorAll("section");
-
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
       },
-      {
-        threshold: 0.6,
-      },
+      { rootMargin: "-25% 0px -55%", threshold: [0.1, 0.35, 0.6] },
     );
 
-    sections.forEach((section) => observer.observe(section));
-
+    document
+      .querySelectorAll<HTMLElement>("main section[id]")
+      .forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
 
-  return (
-    <motion.header
-      className={
-        whichDevice === device.mobile
-          ? mobileClassName
-          : whichDevice === device.tablet
-            ? tabletClassName
-            : desktopClassName
-      }
-      initial={{ opacity: 0, x: 100 }}
-      animate={visible ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.8 }}
-    >
-      {items.map((item) => (
-        <a
-          key={item.id}
-          href={`#${item.id}`}
-          className={`text-lg lg:text-xl font-bold mb-4 transition-colors duration-300 w-full text-center
-            ${
-              activeSection === item.id
-                ? "text-primary"
-                : "text-gray-400 hover:text-white"
-            }`}
-        >
-          {item.label}
-        </a>
-      ))}
-    </motion.header>
-  );
-};
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
 
-export default Header;
+  return (
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-black/75 backdrop-blur-xl">
+      <div className="container-shell flex h-18 items-center justify-between">
+        <a
+          href="#home"
+          className="focus-ring text-sm font-bold tracking-[0.16em] text-white uppercase"
+          aria-label="Go to home"
+        >
+          MG<span className="text-primary">.</span>
+        </a>
+
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
+          {items.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={`focus-ring text-sm font-semibold transition-colors ${
+                activeSection === item.id
+                  ? "text-primary"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-ring rounded-full border border-primary/50 px-4 py-2 text-sm font-bold text-primary transition hover:bg-primary hover:text-black"
+          >
+            Résumé
+          </a>
+        </nav>
+
+        <button
+          type="button"
+          className="focus-ring rounded-lg p-2 text-white md:hidden"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setMenuOpen((value) => !value)}
+        >
+          {menuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden border-t border-white/10 bg-black"
+          >
+            <div className="container-shell flex flex-col py-3">
+              {items.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setMenuOpen(false)}
+                  className={`focus-ring border-b border-white/5 py-4 text-base font-semibold ${
+                    activeSection === item.id ? "text-primary" : "text-gray-300"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="focus-ring py-4 font-semibold text-primary"
+              >
+                Open résumé ↗
+              </a>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
