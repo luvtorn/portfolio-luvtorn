@@ -1,5 +1,6 @@
 export type Project = {
   title: string;
+  slug?: string;
   description: string;
   longDescription: string;
   image?: string;
@@ -11,6 +12,16 @@ export type Project = {
   featured?: boolean;
   github?: string;
   demo?: string;
+  caseStudy?: {
+    role: string;
+    status: string;
+    challenge: string;
+    approach: string;
+    system: string[];
+    decisions: { title: string; detail: string }[];
+    quality: string[];
+    outcome: string;
+  };
 };
 
 export type Experience = {
@@ -49,6 +60,7 @@ export const experiences: Experience[] = [
 export const projects: Project[] = [
   {
     title: "Job Tracker",
+    slug: "job-tracker",
     category: "Featured full-stack project",
     featured: true,
     description:
@@ -71,10 +83,50 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/luvtorn/Job-Tracker",
     demo: "https://job-tracker-phi-swart.vercel.app/",
+    caseStudy: {
+      role: "Personal product · full-stack implementation",
+      status: "Live application",
+      challenge:
+        "Applications, candidate details, interviews, and documents can quickly become scattered across tabs and tools. The goal was to bring those related workflows into one place without losing clarity or control over sensitive data.",
+      approach:
+        "I organized the product around vacancies and their recruitment progress, then connected scheduling, documents, reminders, and analytics to that central workflow. The interface is designed to make the next action visible, not just display stored records.",
+      system: [
+        "Next.js interface with TanStack Query",
+        "Route Handlers and authenticated sessions",
+        "Prisma with PostgreSQL / Neon",
+        "SSE updates and Cloudinary documents",
+      ],
+      decisions: [
+        {
+          title: "Protect account sessions",
+          detail:
+            "JWT authentication uses rotating refresh tokens and HttpOnly cookies. This separates short-lived access from longer sessions while keeping refresh credentials out of client-side JavaScript.",
+        },
+        {
+          title: "Keep changing workflows in sync",
+          detail:
+            "Server-Sent Events support live updates where the recruitment state can change, while TanStack Query manages client-side server state and refetching.",
+        },
+        {
+          title: "Treat quality as architecture",
+          detail:
+            "Strict TypeScript and automated service, security-regression, architecture-boundary, and localization checks help keep a growing feature set maintainable.",
+        },
+      ],
+      quality: [
+        "Unit and service tests, with a repository integration-test foundation",
+        "Security-regression and architecture-boundary tests",
+        "Localization-completeness checks and read-only browser smoke tests",
+      ],
+      outcome:
+        "A deployed end-to-end workspace covering the journey from a vacancy through interviews, documents, and reporting. The project demonstrates product design, frontend implementation, backend boundaries, and testing in one application.",
+    },
   },
   {
     title: "Cookly",
+    slug: "cookly",
     category: "Full-stack recipe platform",
+    featured: true,
     description:
       "A multilingual platform for discovering and publishing recipes.",
     longDescription:
@@ -95,6 +147,44 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/luvtorn/Cookly",
     demo: "https://cookly-proj.vercel.app/en",
+    caseStudy: {
+      role: "Personal product · full-stack implementation",
+      status: "Live, evolving product",
+      challenge:
+        "Recipe discovery and publishing involve different needs: visitors want to find useful ideas quickly, while creators need a clear way to manage their own content. Editorial review adds another set of permissions and workflows.",
+      approach:
+        "Cookly brings a searchable recipe catalog, creator profiles, recipe publishing, and a protected editorial studio into one multilingual experience. The public catalog remains useful even before a visitor creates an account.",
+      system: [
+        "Localized Next.js recipe interface",
+        "Creator and editorial workflows",
+        "Prisma with PostgreSQL ownership rules",
+        "Cloudinary recipe imagery",
+      ],
+      decisions: [
+        {
+          title: "Separate visitors, creators, and editors",
+          detail:
+            "Public discovery stays open, while recipe changes and editorial actions are protected by ownership and role-based access checks.",
+        },
+        {
+          title: "Make content discoverable",
+          detail:
+            "Search and filtering make the catalog useful as it grows. Responsive imagery keeps recipe browsing readable across screen sizes.",
+        },
+        {
+          title: "Build for three languages",
+          detail:
+            "The interface supports English, Polish, and Russian, so navigation and publishing flows must remain coherent across locales.",
+        },
+      ],
+      quality: [
+        "Vitest checks for application behavior",
+        "Playwright browser coverage for key flows",
+        "GitHub Actions quality gates",
+      ],
+      outcome:
+        "A live recipe platform with public discovery and protected publishing workflows. It shows how I structure a product for different user roles while keeping the interface approachable and the codebase testable.",
+    },
   },
   {
     title: "Games Collection",

@@ -8,5 +8,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: "https://portfolio-luvtorn.vercel.app/projects/job-tracker",
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: "https://portfolio-luvtorn.vercel.app/projects/cookly",
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
   ];
 }

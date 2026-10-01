@@ -61,7 +61,7 @@ export default function ContactForm() {
               <p className="eyebrow">Let&apos;s work together</p>
               <h2 className="section-title">Have a project or opportunity in mind?</h2>
               <p className="section-copy mt-5">
-                I&apos;m open to frontend roles, internships, and thoughtful
+                I&apos;m open to frontend roles and thoughtful product
                 collaborations. Send a message and I&apos;ll get back to you.
               </p>
               <a

@@ -16,9 +16,9 @@ const stack = [
   "Next.js",
   "TypeScript",
   "Tailwind CSS",
-  "REST APIs",
-  "Git",
-  "Figma",
+  "PostgreSQL",
+  "Prisma",
+  "Testing",
 ];
 
 export default function About() {
@@ -31,7 +31,7 @@ export default function About() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <p className="eyebrow">About me</p>
-          <h2 className="section-title">Code with clarity. Design with intent.</h2>
+          <h2 className="section-title">From product idea to working software.</h2>
         </motion.div>
 
         <motion.div
@@ -41,16 +41,15 @@ export default function About() {
           className="space-y-9"
         >
           <p className="section-copy">
-            I&apos;m a frontend developer who enjoys turning complex product
-            requirements into clean, maintainable interfaces. During two
-            internships I worked on dashboards, forms, data tables, and REST API
-            integrations using React, Next.js, and TypeScript.
+            I like building the whole workflow, not just the screen. Job Tracker
+            and Cookly gave me room to make product decisions, design responsive
+            interfaces, connect APIs and data, and test the paths people rely on.
           </p>
           <p className="section-copy">
-            I care about accessible interaction, structured code, responsive
-            layouts, and the small details that make software feel dependable.
-            I&apos;m currently expanding into backend development through
-            production-minded full-stack projects.
+            My frontend foundation comes from two commercial internships, where
+            I worked on internal dashboards, forms, data tables, and REST API
+            integrations. I care about accessible interaction and code that a
+            team can continue to maintain.
           </p>
 
           <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-4">

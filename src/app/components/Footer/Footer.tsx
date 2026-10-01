@@ -1,6 +1,7 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import Link from "next/link";
 
-export default function Footer() {
+export default function Footer({ backToTopHref = "#home" }: { backToTopHref?: string }) {
   return (
     <footer className="border-t border-white/10 py-8">
       <div className="container-shell flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left">
@@ -31,12 +32,12 @@ export default function Footer() {
           >
             <FaLinkedin size={18} />
           </a>
-          <a
-            href="#home"
+          <Link
+            href={backToTopHref}
             className="focus-ring rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-gray-400 transition hover:border-primary hover:text-primary"
           >
             Back to top ↑
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

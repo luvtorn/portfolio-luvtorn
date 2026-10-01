@@ -9,13 +9,13 @@
   --primary: #ffda27;
   --primary-strong: #e9c000;
   --line: rgba(255, 255, 255, 0.1);
-  --font-montserrat: "Montserrat", "Segoe UI", Arial, sans-serif;
+  --font-site: var(--font-geist), "Segoe UI", Arial, sans-serif;
 }
 
 @theme inline {
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
-  --font-sans: var(--font-montserrat);
+  --font-sans: var(--font-site);
 }
 
 * {
@@ -35,7 +35,7 @@ body {
     radial-gradient(circle at 75% 5%, rgba(255, 218, 39, 0.07), transparent 28rem),
     var(--background);
   color: var(--foreground);
-  font-family: var(--font-montserrat);
+  font-family: var(--font-site);
   text-rendering: optimizeLegibility;
 }
 
@@ -98,6 +98,33 @@ a {
   text-transform: uppercase;
 }
 
+.case-meta-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-card {
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  border-color: rgba(255, 218, 39, 0.55);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.project-card-image {
+  transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.project-card:hover .project-card-image,
+.project-card:focus-within .project-card-image {
+  transform: scale(1.025);
+}
+
 .section-title {
   margin-top: 0.75rem;
   font-size: clamp(2rem, 6vw, 3.75rem);
@@ -144,20 +171,12 @@ a {
   position: absolute;
   z-index: 0;
   display: none;
-  width: 31rem;
-  height: 31rem;
-  opacity: 0.34;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: min(54rem, 100svh);
+  opacity: 0.22;
   pointer-events: none;
-}
-
-.hero-decoration-left {
-  top: -12rem;
-  left: -15rem;
-}
-
-.hero-decoration-right {
-  top: 2rem;
-  right: -18rem;
 }
 
 @media (min-width: 1024px) {
@@ -182,5 +201,9 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .project-card-image {
+    transform: none !important;
   }
 }

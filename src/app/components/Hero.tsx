@@ -17,25 +17,26 @@ export default function Hero() {
           transition={{ duration: 0.55 }}
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-gray-300">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
             Open to frontend opportunities
           </div>
-          <p className="eyebrow">Frontend developer · Poznań, Poland</p>
+          <p className="eyebrow">Mikołaj Germanenka · Poznań, Poland</p>
           <h1 className="mt-4 max-w-4xl text-[clamp(3rem,9vw,6.7rem)] leading-[0.92] font-bold tracking-[-0.065em] text-white">
-            Thoughtful interfaces,
-            <span className="block text-primary">built to perform.</span>
+            I build useful products,
+            <span className="block text-primary">end to end.</span>
           </h1>
           <p className="mt-7 max-w-2xl text-base leading-7 text-gray-400 sm:text-lg">
-            I&apos;m Mikołaj, a frontend developer with commercial internship
-            experience building responsive React, Next.js, and TypeScript
-            applications—from internal dashboards to secure full-stack products.
+            I&apos;m a frontend developer who turns complex workflows into clear,
+            accessible interfaces. My work includes two live full-stack products,
+            Job Tracker and Cookly, alongside commercial experience building
+            internal tools.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a
               href="#projects"
               className="focus-ring inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 font-bold text-black transition hover:bg-yellow-300"
             >
-              View projects <FaArrowRight size={13} />
+              Explore case studies <FaArrowRight size={13} />
             </a>
             <a
               href="/resume.pdf"
@@ -51,6 +52,11 @@ export default function Hero() {
             >
               Contact me
             </a>
+          </div>
+          <div className="mt-9 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/10 pt-5 text-xs font-semibold tracking-wide text-gray-400 sm:text-sm">
+            <span>2 live full-stack products</span>
+            <span>2 frontend internships</span>
+            <span>React · Next.js · TypeScript</span>
           </div>
         </motion.div>
 
