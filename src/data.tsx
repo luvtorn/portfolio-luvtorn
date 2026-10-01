@@ -3,6 +3,7 @@ export type Project = {
   description: string;
   longDescription: string;
   image?: string;
+  imageFit?: "contain";
   tech: string[];
   highlights: string[];
   engineering?: string[];
@@ -70,6 +71,30 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/luvtorn/Job-Tracker",
     demo: "https://job-tracker-phi-swart.vercel.app/",
+  },
+  {
+    title: "Cookly",
+    category: "Full-stack recipe platform",
+    description:
+      "A multilingual platform for discovering and publishing recipes.",
+    longDescription:
+      "A social cooking platform with recipe discovery, creator profiles, and tools for publishing and curating recipes across English, Polish, and Russian.",
+    image: "/projects/cookly.webp",
+    imageFit: "contain",
+    tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Tailwind CSS"],
+    highlights: [
+      "Search and filter a browsable recipe catalog.",
+      "Create, edit, and publish recipes with a personal profile.",
+      "Switch between English, Polish, and Russian interfaces.",
+      "Review and curate recipes in a protected editorial studio.",
+    ],
+    engineering: [
+      "Recipe ownership and role-based access checks",
+      "Cloudinary image uploads and responsive image presentation",
+      "Vitest, Playwright, and GitHub Actions quality gates",
+    ],
+    github: "https://github.com/luvtorn/Cookly",
+    demo: "https://cookly-proj.vercel.app/en",
   },
   {
     title: "Games Collection",

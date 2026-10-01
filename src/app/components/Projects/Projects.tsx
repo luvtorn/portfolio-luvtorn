@@ -36,7 +36,9 @@ export default function Projects() {
                 className={`relative overflow-hidden ${
                   project.featured
                     ? "aspect-video bg-[#f6f6f8] lg:aspect-auto lg:min-h-full"
-                    : "min-h-60 bg-[radial-gradient(circle_at_20%_20%,rgba(255,218,39,0.18),transparent_35%),linear-gradient(135deg,#181818,#090909)]"
+                    : project.imageFit === "contain"
+                      ? "aspect-video bg-[#f4f5ee]"
+                      : "min-h-60 bg-[radial-gradient(circle_at_20%_20%,rgba(255,218,39,0.18),transparent_35%),linear-gradient(135deg,#181818,#090909)]"
                 }`}
               >
                 {project.image ? (
@@ -50,7 +52,7 @@ export default function Projects() {
                         : "(max-width: 1023px) 100vw, 50vw"
                     }
                     className={`transition duration-500 group-hover:scale-[1.01] ${
-                      project.featured
+                      project.featured || project.imageFit === "contain"
                         ? "object-contain object-center p-3 sm:p-4"
                         : "object-cover"
                     }`}

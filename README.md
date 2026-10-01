@@ -12,7 +12,7 @@ performance, and maintainable code.
 ## Highlights
 
 - Recruiter-focused introduction, experience timeline, and project case studies
-- Featured full-stack Job Tracker with engineering and security highlights
+- Full-stack Job Tracker and Cookly projects with product and engineering highlights
 - Responsive layouts for mobile, tablet, and desktop
 - Accessible navigation, form labels, keyboard focus, and reduced-motion support
 - Session-aware introduction with an immediate skip option
@@ -31,6 +31,18 @@ hiring funnels, and job-search statistics.
 Its stack includes Next.js, React, TypeScript, Prisma, PostgreSQL, TanStack Query,
 JWT authentication with rotating refresh tokens, HttpOnly cookies, Server-Sent
 Events, Cloudinary, internationalization, and automated quality checks.
+
+## Cookly
+
+Cookly is a multilingual recipe platform where visitors can discover and search
+recipes, explore public creator profiles, and publish their own recipes. The
+application also includes a protected editorial studio for curation and review.
+
+- [Live demo](https://cookly-proj.vercel.app/en)
+- [Source code](https://github.com/luvtorn/Cookly)
+
+It uses Next.js, TypeScript, Prisma, PostgreSQL, Tailwind CSS, and Cloudinary,
+with automated checks using Vitest, Playwright, and GitHub Actions.
 
 ## Technology
 
